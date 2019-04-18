@@ -1,5 +1,4 @@
-library(rmarkdown)
-
+#Required libraries for analysing timesereis data
 library(astsa)
 library(ggplot2)
 library(forecast)
