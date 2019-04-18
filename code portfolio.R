@@ -1,4 +1,4 @@
-#Required libraries for analysing timesereis data
+#Required libraries for analysing timesereis data and some other explanatory data analysis
 library(astsa)
 library(ggplot2)
 library(forecast)
@@ -6,6 +6,33 @@ library(dynlm)
 library(xts)
 library(corrplot)
 library(forecast)
+
+
+#Loading airquality Data that is New York Air Quality Measurements (timeseries data May to September 1973)
+#viewing head of data
+head(airquality)
+tail(airquality)
+
+#Creating timesereis for two variables Temp and Wind
+## Create a daily index
+inds <- seq(as.Date("1973-05-01"), as.Date("1973-09-30"), by = 1)
+temp.xts = xts(airquality$Temp, order.by = inds)
+wind.xts = xts(airquality$Wind, order.by = inds)
+
+
+#Ploting timesereis variables (to see visially the stationarity)
+autoplot(temp.xts) + ggtitle("Timeseres of New York Tempreture") + xlab("Time(day)") + ylab("Temperature (F)")
+autoplot(wind.xts) + ggtitle("Timeseres of New York Windspeed") + xlab("Time(day)") + ylab("Speed (MPH)")
+
+#Decompose into three main components (Decompose function only works with "ts" objects)
+temp.ts = ts(airquality$Temp, start=1, frequency = 30)
+plot(decompose(temp.ts))
+
+wind.ts = ts(airquality$Wind, start=1, frequency = 30)
+plot(decompose(wind.ts))
+
+
+
 
 plot(jj, type="o")
 
