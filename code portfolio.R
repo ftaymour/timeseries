@@ -1,5 +1,6 @@
 #Required libraries for analysing timesereis data and some other explanatory data analysis
 library(astsa)
+library(zoo)
 library(ggplot2)
 library(forecast)
 library(dynlm)
@@ -7,8 +8,10 @@ library(xts)
 library(corrplot)
 library(forecast)
 
+###################################  EReading and Basic Manipulation  #############################
 
 #Loading airquality Data that is New York Air Quality Measurements (timeseries data May to September 1973)
+data("airquality")
 #viewing head of data
 head(airquality)
 tail(airquality)
@@ -16,21 +19,57 @@ tail(airquality)
 #Creating timesereis for two variables Temp and Wind
 ## Create a daily index
 inds <- seq(as.Date("1973-05-01"), as.Date("1973-09-30"), by = 1)
-temp.xts = xts(airquality$Temp, order.by = inds)
-wind.xts = xts(airquality$Wind, order.by = inds)
+temp.xts = xts(airquality$Temp, order.by = inds , frequency = 30)
+wind.xts = xts(airquality$Wind, order.by = inds, frequency = 30)
+ozone.xts = xts(airquality$Ozone, order.by = inds, frequency = 30)
+
+#Checking start and End dates, and the frequency of the timeseries
+start(temp.xts)
+end(temp.xts)
+frequency(temp.xts)
+
+#Filling missing values by two methods, Last Observation Carried Forward (LOCF) and interpolation
+#(Manipulating Time Series Data in R with xts & zoo, Chapter3, DataCamp)
+ozone.filled.xts = na.locf(ozone.xts, fromLast = TRUE)
+ozone.filled.xts = na.approx(ozone.xts)
+
+
+#Creating multiple timeseres (Manipulating Time Series Data in R with xts & zoo, Chapter3, DataCamp)
+tot.xts = merge(temp.xts, wind.xts, ozone.filled.xts)
+tot.xts
+
+#Selecting a window of timeseres, (Manipulating Time Series Data in R with xts & zoo, Chapter2, DataCamp)
+tot.xts['1973-05/',]           #selecting only for May
+tot.xts['1973-05/1973-06',]   #selecting only for May and June
+tot.xts[index(tot.xts)>'1973-05-21',]   #selecting values after '1973-05-21' 
+
+###################################  Explaratory Data analysis  #############################
+
+#Average of temperature based on days and months
+aggregate(temp.xts, by = months(inds), FUN = mean)
+aggregate(temp.xts, by = months(inds), FUN = mean)
+
 
 
 #Ploting timesereis variables (to see visially the stationarity)
 autoplot(temp.xts) + ggtitle("Timeseres of New York Tempreture") + xlab("Time(day)") + ylab("Temperature (F)")
 autoplot(wind.xts) + ggtitle("Timeseres of New York Windspeed") + xlab("Time(day)") + ylab("Speed (MPH)")
+autoplot(ozone.filled.xts) + ggtitle("Timeseres of New York") + xlab("Time(day)") + ylab("Ozone unit")
 
-#Decompose into three main components (Decompose function only works with "ts" objects)
+#Decomposing timesereis into three main components (Decompose() function only works with "ts" objects)
 temp.ts = ts(airquality$Temp, start=1, frequency = 30)
 plot(decompose(temp.ts))
 
 wind.ts = ts(airquality$Wind, start=1, frequency = 30)
 plot(decompose(wind.ts))
 
+
+# Histogram and correaltion plots
+ggplot(data=data.frame(ozone = coredata(ozone.filled.xts), time = time(temp.xts))) + 
+  geom_histogram(aes(x=ozone))
+
+# Correlation plot
+corrplot(cor(tot.xts))
 
 
 
