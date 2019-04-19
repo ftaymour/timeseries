@@ -78,8 +78,7 @@ acf2(wind.xts)
 acf2(ozone.xts)
 
 #computing cross-correlation function between time sereis
-ccf(coredata(temp.xts), coredata(wind.xts))
-ccf(as.ts(temp.xts),as.ts(wind.ts))
+ccf2(as.ts(temp.xts),as.ts(wind.xts))
 
 ###################################  Timeseries Data analysis  #############################
 
