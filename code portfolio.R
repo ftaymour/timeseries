@@ -1,5 +1,6 @@
 #Required libraries for analysing timesereis data and some other explanatory data analysis
 library(astsa)
+library(tseries)
 library(zoo)
 library(ggplot2)
 library(forecast)
@@ -8,7 +9,7 @@ library(xts)
 library(corrplot)
 library(forecast)
 
-###################################  EReading and Basic Manipulation  #############################
+###################################  Reading and Basic Manipulation  #############################
 
 #Loading airquality Data that is New York Air Quality Measurements (timeseries data May to September 1973)
 data("airquality")
@@ -71,6 +72,38 @@ ggplot(data=data.frame(ozone = coredata(ozone.filled.xts), time = time(temp.xts)
 # Correlation plot
 corrplot(cor(tot.xts))
 
+#Computing autocorrelation and partial autocorrlation
+acf2(temp.xts)
+acf2(wind.xts)
+acf2(ozone.xts)
+
+#computing cross-correlation function between time sereis
+ccf(coredata(temp.xts), coredata(wind.xts))
+ccf(as.ts(temp.xts),as.ts(wind.ts))
+
+###################################  Timeseries Data analysis  #############################
+
+# Estimating linear trend using linear regression and plotting them
+trend.fit = lm(coredata(temp.xts) ~ time(temp.xts))
+summary(trend.fit)
+autoplot(temp.xts) + geom_abline(intercept = trend.fit$coefficients[1], slope = trend.fit$coefficients[2])
+
+
+#Chekcing the stationarity, using Augmented Dickey–Fuller (ADF) t-statistic test
+adf.test(temp.xts)
+
+# Making Stationarity by detredning using linear regression (this only removes first order linear trend)
+#R. Shumway (author), D. Stoffer book, chapter 2
+res= temp.xts - trend.fit$fitted.values
+autoplot(res)
+adf.test(res)
+
+
+#Making Stationarity using first order differencing (R. Shumway (author), D. Stoffer book, chapter 2)
+temp.xts.diff1 = diff(temp.xts)
+autoplot(temp.xts.diff1)
+#Statistical test
+adf.test(temp.xts.diff1[-1,])
 
 
 plot(jj, type="o")
