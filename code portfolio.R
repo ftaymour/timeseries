@@ -11,7 +11,7 @@ library(forecast)
 
 ###################################  Reading and Basic Manipulation  #############################
 
-#Loading airquality Data that is New York Air Quality Measurements (timeseries data May to September 1973)
+#Loading airquality Data that is New York Air Quality Measurements (timeseries data May to September 1973, daily)
 data("airquality")
 #viewing head of data
 head(airquality)
