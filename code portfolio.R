@@ -115,140 +115,48 @@ ggplot(data = data.frame(temp = coredata(temp.xts), temp.lowess = temp.smooth$y,
   geom_line(aes(x=time, y=temp.ma), col= "blue", size =1)
 
 
+###################################  Model Building, Chekcing and Diagnostic  #############################
+
+#First Order autoRegressive model (using stationary timeseries)
+AR.fit = arima(temp.xts.diff1, order = c(1, 0, 0))
+summary(AR.fit)
+
+#First order Moving Average model (using stationary timeseries)
+MA.fit = arima(temp.xts.diff1, order = c(0, 0, 1))
+summary(MA.fit)
+
+#Fitting Autoregressive Moving Average model (using stationary timeseries)
+ARMA.fit = arima(temp.xts.diff1, order = c(1,0,1))
+summary(ARMA.fit)
+
+#Fitting Autoregressive Integrated Moving Average model (using Nonstationary timeseries)
+ARIMA.fit = arima(temp.xts, order = c(1,1,1))
+summary(ARIMA.fit)
 
 
-plot(jj, type="o")
+#Fitting ARIMA model with automatic parameter selection
+Auto.fit=auto.arima(temp.xts)
+summary(Auto.fit)
 
-View(jj)
+#Comparing models
+print(cat("\n The AIC of AR.fit:", AIC(AR.fit), "\n The AIC of MA.fit:", AIC(MA.fit),
+          "\n The AIC of ARMA.fit:", AIC(ARMA.fit), "\n The AIC of ARIMA.fit:", AIC(ARIMA.fit)))
 
-#---------
-w=rnorm(500,0,1)
-v= filter(w, filter = rep(1/3, 3))
-plot.ts(w)
-plot.ts (v)
+###################################  Training, Evaluating and Forecasting Model  #############################
 
-ggplot(data =data.frame(d=w, time= seq(1,length(w)) )) + geom_line(aes(x=time, y=d))
-ggplot(data =data.frame(d=v, time= seq(1,length(v)) )) + geom_line(aes(x=time, y=d))
+#Definfing a custom function
+fun1= function(x,h){forecast(auto.arima(x), h=h)}
 
-#energy=read.csv(file= "I:/INFO 590- Time Series/project/energydata_complete.csv", header=TRUE, sep=",")
-energy=read.csv(file= "C:/Users/taymouri/Desktop/Indiana/Timeseries/Project/energydata_complete.csv", header=TRUE, sep=",")
-energy[,2:3]
-View(energy)
-head(energy)
-energy$date
-as.POSIXlt(strptime(energy$date, "%Y-%m-%d %H:%M:%S"))
-as.ts(energy$date)
+#Evaluating model by cross-validation (using one prediction ahead)
+# Forecasting Using R, Chapter 2, DataCamp
+errors= tsCV(temp.xts, forecastfunction = fun1, h=1)
 
-energy_z=read.zoo(energy, index.column = 1, format = "")
-energy_z
-energy_z = as.xts(energy_z)
-plot.ts(energy_z$T1)
+print(cat("MSE is:", mean(errors^2 , na.rm = TRUE)))
 
-energy_xts=xts(energy[,-1], order.by =  as.POSIXct(energy$date, format="%Y-%m-%d %H:%M:%S", tz="GMT"))
-head(energy_xts)
-tail(energy_xts)
-View(energy_xts)
-nyears(energy_xts)
-nmonths(energy_xts)
-ndays(energy_xts)
-periodicity(energy_xts)
+#Forecasting 5 elements ahead
+fc = forecast(Auto.fit, h =5)
+autoplot(fc, size=1)
 
 
-corrplot(cor(energy_xts), type="upper")
-hist(energy_xts[,3])
-library(psych)
-multi.hist(energy_xts[,-c('rv1', 'rv2')])
-energy_xts[,! names(energy_xts) %in% c('rv1', 'rv2')]
 
-decompose(energy_xts[,'RH_2'], type="additive", frequency = 10)
-decompose(energy_xts[,13], type="additive")
-uu=ts(coredata(energy_xts[,which(names(energy_xts) == "T7")]), start=1, frequency = 10)
-plot(decompose(uu))
-
-yy=lowess(energy_xts[,15])
-ggplot(data=data.frame(real=coredata(energy_xts[,15])[,1], smooth = yy$y, time= time(energy_xts[,15])))+
-  geom_line(aes(x=time, y=real), col="black") + geom_line(aes(x=time, y=smooth), col="red")
-
-head(energy_xts[,15])
-head(log(energy_xts[,15]))
-
-T7.ts= ts(coredata(energy_xts[,which(names(energy_xts) == "T7")])[,1], start=1)
-time(T7.ts)
-
-T7.log=log(energy_xts[,which(names(energy_xts) == "T7")] )
-T7.recip = 1/energy_xts[,which(names(energy_xts) == "T7")]
-
-T7.transform=merge.xts(T7.log, T7.recip, energy_xts[,which(names(energy_xts) == "T7")])
-colnames(T7.transform) = c('log', 'reciprocal', 'original')
-autoplot(T7.transform)
-
-T7.diff1=diff(energy_xts[,which(names(energy_xts) == "T7")])
-autoplot(T7.diff1)+ylab("T7.diff1")
-
-
-arima(energy_xts[,3], order=c(1,0,1))
-auto.arima(energy_xts[,3])
-acf(energy_xts[,which(names(energy_xts) == "T7")])
-log.T7=log(energy_xts[,which(names(energy_xts) == "T7")])
-acf2( log.T7 )
-
-AR1=arima(energy_xts[,which(names(energy_xts) == "T7")], order=c(1,0,0) )
-AR1
-
-
-MA1=arima(energy_xts[,which(names(energy_xts) == "T7")], order=c(0,0,1) )
-MA1
-
-ARMA=arima(energy_xts[,which(names(energy_xts) == "T7")], order=c(1,0,1) )
-ARMA
-
-ARIMA=arima(energy_xts[,which(names(energy_xts) == "T7")], order=c(1,1,0) )
-ARIMA
-
-print(paste("AIC for different models:", "AR:",12, ",MA:",14))
-round(AIC(AR1),1)
-best=auto.arima(energy_xts[,which(names(energy_xts) == "T7")])
-best$fitted
-
-f.12=forecast(best, h=12)
-autoplot.zoo(energy_xts[,which(names(energy_xts) == "T7")])+autolayer(f.12$fitted)
-autoplot.zoo(f.12)
-
-autoplot(energy_xts[,3])
-
-plot.ts(energy_xts[,'RH_2'])
-
-names(energy_xts)
-which(names(energy_xts) == "T7")
-ts.plot(energy_xts[,3:5])
-frequency(as.ts(energy_xts[,5]))
-
-coredata(energy_xts[,'RH_2'])
-seq(1:dim(energy_xts)[1])
-uu=ts(coredata(energy_xts[,'T6']), start = 1, end=dim(energy_xts)[1], frequency = 10)
-plot(decompose(uu))
-
-t1.ts=ts(energy$T1)
-t1.ts
-plot(t1.ts)
-acf(t1.ts)
-acf2(t1.ts)
-
-
-t1.ts=ts(energy$T2)
-t1.ts
-plot(t1.ts)
-acf(t1.ts)
-acf2(t1.ts)
-
-t1.ts=ts(energy$RH_3)
-t1.ts
-plot(t1.ts)
-smooth.lowess=lowess(t1.ts)
-smooth.kernel=ksmooth(x=time(t1.ts), y=t1.ts, kernel="normal", bandwidth = 100)
-points(x=smooth.lowess$x, y=smooth.lowess$y, col="red")
-lines(x=smooth.kernel$x, y=smooth.kernel$y, col="blue")
-
-acf(t1.ts)
-acf2(t1.ts)
 
