@@ -88,7 +88,7 @@ summary(trend.fit)
 autoplot(temp.xts) + geom_abline(intercept = trend.fit$coefficients[1], slope = trend.fit$coefficients[2])
 
 
-#Chekcing the stationarity, using Augmented Dickey–Fuller (ADF) t-statistic test
+#Chekcing the stationarity for temperature timeseries, using Augmented Dickey–Fuller (ADF) t-statistic test
 adf.test(temp.xts)
 
 # Making Stationarity by detredning using linear regression (this only removes first order linear trend)
@@ -103,6 +103,13 @@ temp.xts.diff1 = diff(temp.xts)
 autoplot(temp.xts.diff1)
 #Statistical test
 adf.test(temp.xts.diff1[-1,])
+
+
+#Smoothing timeseries (for temperature), #R. Shumway (author), D. Stoffer book, chapter 2
+temp.smooth = lowess(temp.xts)
+#Plotting
+ggplot(data = data.frame(temp = coredata(temp.xts), temp.sm = temp.smooth$y, time = index(temp.xts)))+
+  geom_line(aes(x=time, y = temp)) + geom_line(aes(x=time, y=temp.sm), col="red")
 
 
 plot(jj, type="o")
