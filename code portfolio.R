@@ -117,6 +117,7 @@ ggplot(data = data.frame(temp = coredata(temp.xts), temp.lowess = temp.smooth$y,
 
 ###################################  Model Building, Chekcing and Diagnostic  #############################
 
+#R. Shumway (author), D. Stoffer book, chapter 3
 
 #First Order autoRegressive model (using stationary timeseries)
 AR.fit = arima(temp.xts.diff1, order = c(1, 0, 0))
