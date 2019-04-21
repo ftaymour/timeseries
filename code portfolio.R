@@ -115,6 +115,35 @@ ggplot(data = data.frame(temp = coredata(temp.xts), temp.lowess = temp.smooth$y,
   geom_line(aes(x=time, y=temp.ma), col= "blue", size =1)
 
 
+###################################  Model Building, Chekcing and Diagnostic  #############################
+
+#First Order autoRegressive model (using stationary timeseries)
+AR.fit = arima(temp.xts.diff1, order = c(1, 0, 0))
+summary(AR.fit)
+
+#First order Moving Average model (using stationary timeseries)
+MA.fit = arima(temp.xts.diff1, order = c(0, 0, 1))
+summary(MA.fit)
+
+#Fitting Autoregressive Moving Average model (using stationary timeseries)
+ARMA.fit = arima(temp.xts.diff1, order = c(1,0,1))
+summary(ARMA.fit)
+
+#Fitting Autoregressive Integrated Moving Average model (using Nonstationary timeseries)
+ARIMA.fit = arima(temp.xts, order = c(1,1,1))
+summary(ARIMA.fit)
+
+
+#Fitting ARIMA model with automatic parameter selection
+Auto.fit=auto.arima(temp.xts)
+summary(Auto.fit)
+
+#Comparing models
+print(cat("\n The AIC of AR.fit:", AIC(AR.fit), "\n The AIC of MA.fit:", AIC(MA.fit),
+          "\n The AIC of ARMA.fit:", AIC(ARMA.fit), "\n The AIC of ARIMA.fit:", AIC(ARIMA.fit)))
+
+
+
 
 
 plot(jj, type="o")
