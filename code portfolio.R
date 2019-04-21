@@ -105,11 +105,16 @@ autoplot(temp.xts.diff1)
 adf.test(temp.xts.diff1[-1,])
 
 
-#Smoothing timeseries (for temperature), #R. Shumway (author), D. Stoffer book, chapter 2
-temp.smooth = lowess(temp.xts)
+#Smoothing timeseries (for temperature) using Locally Weight Regression and Moving Average methods
+#R. Shumway (author), D. Stoffer book, chapter 2
+temp.lowess = lowess(temp.xts)
+temp.ma = ma(temp.xts, order = 10)  #Length of window is 10
 #Plotting
-ggplot(data = data.frame(temp = coredata(temp.xts), temp.sm = temp.smooth$y, time = index(temp.xts)))+
-  geom_line(aes(x=time, y = temp)) + geom_line(aes(x=time, y=temp.sm), col="red")
+ggplot(data = data.frame(temp = coredata(temp.xts), temp.lowess = temp.smooth$y, temp.ma =temp.ma, time = index(temp.xts)))+
+  geom_line(aes(x=time, y = temp)) + geom_line(aes(x=time, y=temp.lowess), col="red", size=1) + 
+  geom_line(aes(x=time, y=temp.ma), col= "blue", size =1)
+
+
 
 
 plot(jj, type="o")
