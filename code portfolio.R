@@ -117,6 +117,7 @@ ggplot(data = data.frame(temp = coredata(temp.xts), temp.lowess = temp.smooth$y,
 
 ###################################  Model Building, Chekcing and Diagnostic  #############################
 
+
 #First Order autoRegressive model (using stationary timeseries)
 AR.fit = arima(temp.xts.diff1, order = c(1, 0, 0))
 summary(AR.fit)
@@ -141,6 +142,10 @@ summary(Auto.fit)
 #Comparing models
 print(cat("\n The AIC of AR.fit:", AIC(AR.fit), "\n The AIC of MA.fit:", AIC(MA.fit),
           "\n The AIC of ARMA.fit:", AIC(ARMA.fit), "\n The AIC of ARIMA.fit:", AIC(ARIMA.fit)))
+
+
+
+
 
 ###################################  Training, Evaluating and Forecasting Model  #############################
 
