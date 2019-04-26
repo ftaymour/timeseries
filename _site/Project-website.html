@@ -433,7 +433,7 @@ periodicity(energy_xts)</code></pre>
 <h3>Corrologram</h3>
 <p>It would be interesting to look at the correlation plots between variables. “corrplot ()” is very usefull to give a nice visualization about the correlation between variables.</p>
 <pre class="r"><code>corrplot(cor(energy_xts), type=&quot;upper&quot;)</code></pre>
-<p><img src="Project-website_files/figure-html/unnamed-chunk-5-1.png" width="672" /> The above plot shows the existing positive and negative correaltions among the variables. For example there is a negative correlation between RH_6 (humidity outside the home) and T7 (tempreture in ironing room). This plot shows us the way that values of two variables change against each other, i.e., positive or negative.</p>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-5-1.png" /><!-- --> The above plot shows the existing positive and negative correaltions among the variables. For example there is a negative correlation between RH_6 (humidity outside the home) and T7 (tempreture in ironing room). This plot shows us the way that values of two variables change against each other, i.e., positive or negative.</p>
 </div>
 <div id="boxplot" class="section level3">
 <h3>Boxplot</h3>
@@ -441,7 +441,7 @@ periodicity(energy_xts)</code></pre>
 <pre class="r"><code>#Creating a ts object, we set the frequency to 30, such that box plots shows the distributions per day
 T7.ts=ts(coredata(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)]), start=1, frequency = 30)
 boxplot(T7.ts ~ cycle(T7.ts))</code></pre>
-<p><img src="Project-website_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-6-1.png" /><!-- --></p>
 <p>The above plot shows the distributions of temperature for different days are very similar for the given dataset.</p>
 </div>
 <div id="histogram" class="section level3">
@@ -449,14 +449,14 @@ boxplot(T7.ts ~ cycle(T7.ts))</code></pre>
 <p>One way to identify whether a timeseries is stationary, is to look at its histogram. Usually bell-shaped histograms can be regarded as stationary processes, whereas skewed distrobutions show non-stationary processes.</p>
 <pre class="r"><code>#Excluding the last two columns since they are not timesereis
 multi.hist(energy_xts[,!names(energy_xts) %in% c(&#39;rv1&#39;, &#39;rv2&#39;)])</code></pre>
-<p><img src="Project-website_files/figure-html/unnamed-chunk-7-1.png" width="672" /> As the above plot shows most of timeseries variables except <strong>Windspeed, RH_out</strong> are stationary.</p>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-7-1.png" /><!-- --> As the above plot shows most of timeseries variables except <strong>Windspeed, RH_out</strong> are stationary.</p>
 </div>
 <div id="timeseries-with-abline" class="section level3">
 <h3>Timeseries with Abline</h3>
 <p>Using linear regression, it is easy to see that the trend is increasing; however, it is not a surprising fact since observations are samples from January to May and thus temperature increases in this period. More importantly, the variance of T7 increases as time passes and due to that the time-series in not stationarity.</p>
 <pre class="r"><code>plot(T7.ts) # plot the raw data
 abline(reg=lm(coredata(T7.ts) ~time(T7.ts))) # fit a trend line</code></pre>
-<p><img src="Project-website_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-8-1.png" /><!-- --></p>
 </div>
 </div>
 </div>
@@ -476,14 +476,14 @@ T7.transform=merge.xts(T7.log, T7.recip, energy_xts[,which(names(energy_xts) == 
 colnames(T7.transform) = c(&#39;log&#39;, &#39;reciprocal&#39;, &#39;original&#39;)
 #Plotting
 autoplot(T7.transform)</code></pre>
-<p><img src="Project-website_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-9-1.png" /><!-- --></p>
 <p>It is clear from the figures that both transformations can make the time series more stabilize in terms of existing variations. From the figures, the reciprocal and logarithmic transformations look like a horizontal line, but it is owing to inappropriate scaling that occurred when three figures are packed into one frame. Also, it must be stressed that due to the absence of zero and negative values the mentioned transformations did work.</p>
 <p>Adjusting the correct value of differencing for a timeseries is a brute force task and there is no shortcuts. In this part, first order differencing will be adopted to see how it improves the stationary property of a given time series.</p>
 <pre class="r"><code>#Creating a first order differencing timeseries
 T7.diff1=diff(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)])
 #Plotting
 autoplot(T7.diff1)+ylab(&quot;T7.diff1&quot;)</code></pre>
-<p><img src="Project-website_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-10-1.png" /><!-- --></p>
 <p>The above plot shows clearly that the first order differencing (d=1) can capture the available linear trend and makes a stationary time series. This results also confirmed the output of linear regression obtained earlier since the linear regression captures the first order linear trend of a time series.</p>
 </div>
 <div id="decomposition" class="section level2">
@@ -493,7 +493,7 @@ autoplot(T7.diff1)+ylab(&quot;T7.diff1&quot;)</code></pre>
 T7.ts=ts(coredata(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)]), start=1, frequency = 4320)
 #decomposing
 plot(decompose(T7.ts))</code></pre>
-<p><img src="Project-website_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-11-1.png" /><!-- --></p>
 <p>As shown in the above figures, the trend is increasing as it is supposed to be, since the observations are sampled from January until May. The seasonal plot clearly depicts cycles in each month. More importantly, one can see that the ransom noise is fully captured by this decomposition ( it is random since no specific patterns are observed).</p>
 </div>
 <div id="linear-regression" class="section level2">
@@ -526,7 +526,7 @@ summary(fit.linear)</code></pre>
 <pre class="r"><code>#Plot linear trend
 ggplot(data=data.frame(real=T7.ts, fit=fit.linear$fitted.values, time = time(energy_xts[,15])))+
   geom_line(aes(x=time, y=real), col=&quot;black&quot;) + geom_line(aes(x=time, y=fit), col=&quot;blue&quot;)</code></pre>
-<p><img src="Project-website_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-12-1.png" /><!-- --></p>
 <p>The estimated regression is <span class="math inline">\(T7 = 0.172 + 0.0003t\)</span>. The esimtated coffeicient for the time (t), tells that in each 10 minutes there is an increase amount of temprature, i.e., <span class="math inline">\(3.092e-04\)</span>, in its unit of measurement. Also the adjusted <span class="math inline">\(R^2\)</span> is 0.69, which means that the estimated linear regression can explain <span class="math inline">\(69%\)</span> of target variables’s variation.</p>
 </div>
 <div id="smoohting" class="section level2">
@@ -538,7 +538,7 @@ T7.lowess=lowess(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)])
 ggplot(data=data.frame(real=coredata(energy_xts[,15])[,1], smooth = T7.lowess$y, 
                        time= time(energy_xts[,15])))+
   geom_line(aes(x=time, y=real), col=&quot;black&quot;) + geom_line(aes(x=time, y=smooth), col=&quot;red&quot;)</code></pre>
-<p><img src="Project-website_files/figure-html/unnamed-chunk-13-1.png" width="672" /> The result shows an upward trend for the variable T7 (temprature in ironing room), which is not a surprising fact since the timeseries is captured from spring to summer.</p>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-13-1.png" /><!-- --> The result shows an upward trend for the variable T7 (temprature in ironing room), which is not a surprising fact since the timeseries is captured from spring to summer.</p>
 </div>
 </div>
 <div id="arma-arima-and-model-diagnostic-and-selection" class="section level1">
@@ -549,7 +549,7 @@ ggplot(data=data.frame(real=coredata(energy_xts[,15])[,1], smooth = T7.lowess$y,
 <p>This part continues the investigation for timeseries “T7”. The following shows corresponding ACF and PACF for this variable.</p>
 <pre class="r"><code>#Plotting ACF and PACF for T7
 acf2(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)])</code></pre>
-<p><img src="Project-website_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-14-1.png" /><!-- --></p>
 <p>These plots can help us to select the right model’s form. Indeed, MA processes have an ACF plot that is <strong>cut off</strong> whereas for AR and ARMA processes it is <strong>tailed off</strong>. On the other side, PACF can provide a distinction between ARMA and AR, where, for the former, the plot is tailed off, and for the later, it is cut off. From the above plot, It is suspected that the model’s form is ARMA since the PACF does not show a clear cut off (it is gradually decreasing from the second lag onwards). We can check this issue in another way using AIC information criterion. Indeed, the AIC criterion tells us which model better fits the data and have a smaller number of variables. The aim is to build some models and compares corresponding AIC values.</p>
 </div>
 <div id="model-building" class="section level2">
@@ -599,10 +599,10 @@ summary(Best.fit)</code></pre>
 <p>To see how good the model is, we will examine the residuals of the model.</p>
 <pre class="r"><code>#Plotting residuals
 autoplot(residuals(Best.fit))</code></pre>
-<p><img src="Project-website_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-17-1.png" /><!-- --></p>
 <pre class="r"><code>#Further investigations
 checkresiduals(Best.fit)</code></pre>
-<p><img src="Project-website_files/figure-html/unnamed-chunk-17-2.png" width="672" /></p>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-17-2.png" /><!-- --></p>
 <pre><code>## 
 ##  Ljung-Box test
 ## 
