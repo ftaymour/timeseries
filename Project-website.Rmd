@@ -10,8 +10,8 @@ output:
     toc: yes
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
 ```
 
 # Introduction
@@ -64,9 +64,9 @@ The following attributes are used in this dataset:
 + rv2, Random variable 2, nondimensional 
 
 ## Problem Definition and Methodology
-The dataset as demonstrated above contains multi timeseres variables that can be used for the prediction of the target variable, i.e., Appliance. However, in this project the focus will be pain on analysing some timeseries features to demonstrate the learned lessons from this course.
+The dataset as demonstrated above contains multi timeseres variables that can be used for the prediction of the target variable, i.e., Appliance. However, in this project the focus will be paid on analysing some timeseries features to demonstrate the learned lessons from this course.
 
-# Basic Data Analysis
+## Basic Data Analysis
 First of all data must be fetched and changed to the timeseres datatype. Since the data is stored in a CSV file, we read it by the standard function and then convert it to TS or XTS.  __It must be mentioned that there is no missing values in this dataset__, as shown bellow:
 
 ```{r, message=FALSE, warning=FALSE}
@@ -97,7 +97,7 @@ ndays(energy_xts)
 #Frequency
 periodicity(energy_xts)
 ```
-## Corrologram
+### Corrologram
 It would be interesting to look at the correlation plots between variables. "corrplot ()" is very usefull to give a nice visualization about the correlation between variables.
 ```{r}
 corrplot(cor(energy_xts), type="upper")
@@ -105,15 +105,18 @@ corrplot(cor(energy_xts), type="upper")
 The above plot shows the existing positive and negative correaltions among the variables. For example there is a negative correlation between RH_6 (humidity outside the home) and T7 (tempreture in ironing room). This plot shows us the way that values of two variables change against each other, i.e., positive or negative.
 
 
-## Boxplot
-The following boxplot shows the distribution values of T7 over existing cycles
+### Boxplot
+The following boxplot shows the distribution values of T7 over existing cycles.
 ```{r}
 #Creating a ts object, we set the frequency to 30, such that box plots shows the distributions per day
 T7.ts=ts(coredata(energy_xts[,which(names(energy_xts) == "T7")]), start=1, frequency = 30)
 boxplot(T7.ts ~ cycle(T7.ts))
 ```
 
-## Histogram
+The above plot shows the distributions of temperature for different days are very similar for the given dataset.
+
+
+### Histogram
 One way to identify whether a timeseries is stationary, is to look at its histogram. Usually bell-shaped histograms can be regarded as stationary processes, whereas skewed distrobutions show non-stationary processes.
 
 ```{r}
@@ -122,50 +125,18 @@ multi.hist(energy_xts[,!names(energy_xts) %in% c('rv1', 'rv2')])
 ```
 As the above plot shows most of timeseries variables except __Windspeed, RH_out__ are stationary.
 
-## Decomposition
-A timeseries can be decomposed into three main elements, i.e., trend, seasonal and residuals. We selected "T7" for this issue (since "decompose()" does not work with XTS objects, a "ts" object is created first).
+### Timeseries with Abline
+Using linear regression, it is easy to see that the trend is increasing; however, it is not a surprising fact since observations are samples from January to May and thus temperature increases in this period. More importantly, the variance of T7 increases as time passes and due to that the time-series in not stationarity.
 ```{r}
-#Creating a ts object (In every month we have (30*24*60)/10 = 4320 samples
-T7.ts=ts(coredata(energy_xts[,which(names(energy_xts) == "T7")]), start=1, frequency = 4320)
-#decomposing
-plot(decompose(T7.ts))
+plot(T7.ts) # plot the raw data
+abline(reg=lm(coredata(T7.ts) ~time(T7.ts))) # fit a trend line
 ```
-As the above plot shows, trend is increasing as it is supposed to be, since the observations are sampled from January until May. The seasonal plot clearly depicts cycles in each month. More importantly, one can see that the ransom noise is fully captured by this decomposition.
-
-## Smoohting
-Also we can smootht this timeseries by different methods to see the underlying trend. The locally-weighted polynomial regression (lowess) will be invoked for this matter.
-
-```{r}
-#Smoohting using Lowess for T7
-T7.lowess=lowess(energy_xts[,which(names(energy_xts) == "T7")])
-#Plotting the time series and its trend
-ggplot(data=data.frame(real=coredata(energy_xts[,15])[,1], smooth = T7.lowess$y, 
-                       time= time(energy_xts[,15])))+
-  geom_line(aes(x=time, y=real), col="black") + geom_line(aes(x=time, y=smooth), col="red")
-
-```
-The result shows an upward trend for the variable T7 (temprature in ironing room), which is not a surprising fact since the timeseries is captured from spring to summer.
 
 
 
-## Linear Regression
-Also, the linear trend could be obtained via linear regression as follows. It must be mentioned a "ts" object must be created first, since an XTS object does not work well in this case.
-
-```{r, message=FALSE, warning=FALSE}
-#Creating a "ts" object for T7
-T7.ts= ts(coredata(energy_xts[,which(names(energy_xts) == "T7")])[,1], start=1)
-#Regression with intercept
-fit.linear=lm(T7.ts ~ time(T7.ts))
-#summary of the model
-summary(fit.linear)
-#Plot linear trend
-ggplot(data=data.frame(real=T7.ts, fit=fit.linear$fitted.values, time = time(energy_xts[,15])))+
-  geom_line(aes(x=time, y=real), col="black") + geom_line(aes(x=time, y=fit), col="blue")
-```
-The esimtated coffeicient for the time, tells that in each 10 minutes there is an increase amount of temprature, i.e.,  $3.092e-04$ in the unit of measurement.
 
 # Stationarity
-All the previous plots of T7 showed an upward trend which presumably implies that this timeseries is not stationary, i.e., corresponding characteristics changing over time. Hence, it must be fixed in some ways. It can be done by log transformation or by differencing.
+All the previous plots of T7 showed an upward trend which presumably implies that this time series is not stationary, i.e., corresponding characteristics change over time. Hence, it must be fixed in some ways. It can be done by log transformation or by differencing. Each of the mentioned methods can mitigate to some extent the existing variations such that, the resulting time series becomes closer to stationarity.
 
 ## Transformation
 The following codes transfomr T7 into logarithmic and reciprocal values.
@@ -183,10 +154,11 @@ colnames(T7.transform) = c('log', 'reciprocal', 'original')
 autoplot(T7.transform)
 
 ```
-It is clear from the figures that both transformations can make the timeseries more stabilize in terms of existing variations. From the figures the reciprocal and logarithmic transformations look like a horizontal line but it is owing to inappropriate scalling that occurred when three figures are packed into one. Also, it must be stressed that due to absence of zero and negative values the mentioned transfomations did work.
+
+It is clear from the figures that both transformations can make the time series more stabilize in terms of existing variations. From the figures, the reciprocal and logarithmic transformations look like a horizontal line, but it is owing to inappropriate scaling that occurred when three figures are packed into one frame. Also, it must be stressed that due to the absence of zero and negative values the mentioned transformations did work.
 
 
-Adjusting the correct value of differencing for a timeseries is a brute force task and there is no shortcuts. In this part, first order differencing will be adopted to see how it improves the stationary property of a given timeseries.
+Adjusting the correct value of differencing for a timeseries is a brute force task and there is no shortcuts. In this part, first order differencing will be adopted to see how it improves the stationary property of a given time series.
 
 ```{r, message=FALSE, warning=FALSE}
 #Creating a first order differencing timeseries
@@ -194,11 +166,66 @@ T7.diff1=diff(energy_xts[,which(names(energy_xts) == "T7")])
 #Plotting
 autoplot(T7.diff1)+ylab("T7.diff1")
 ```
-The above plot shows clearly that the first order differencing (d=1) can capture the existing linear trend and makes the a stationary timeseries. This results also confirmes the output of linear regression obtined earlier, since the linear regression captures the first order linear trend of a timeseries.
 
-# Model Diagnostic and Selection
 
-A timeseries can be modeled through different formulations, including Moving Average (MA), Auto Regresive (AR), AutoRegressive Moving Average (ARMA) and AutoRegressive Integrated Moving Average (ARIMA). Before getting into the details it would be helpful to investigate Autocorrelation Function (ACF) and Partially Autocorrelation Function (PACF) plots. These plots guide us which model better fits the data under consideration.
+The above plot shows clearly that the first order differencing (d=1) can capture the available linear trend and makes a stationary time series. This results also confirmed the output of linear regression obtained earlier since the linear regression captures the first order linear trend of a time series.
+
+
+
+
+
+## Decomposition
+A timeseries can be decomposed into three main elements, i.e., trend, seasonal and residuals. We selected "T7" for this issue (since "decompose()" does not work with XTS objects, a "ts" object is created first).
+```{r}
+#Creating a ts object (In every month we have (30*24*60)/10 = 4320 samples
+T7.ts=ts(coredata(energy_xts[,which(names(energy_xts) == "T7")]), start=1, frequency = 4320)
+#decomposing
+plot(decompose(T7.ts))
+```
+
+As shown in the above figures, the trend is increasing as it is supposed to be, since the observations are sampled from January until May. The seasonal plot clearly depicts cycles in each month. More importantly, one can see that the ransom noise is fully captured by this decomposition ( it is random since no specific patterns are observed).
+
+
+
+
+## Linear Regression
+The linear trend for variable T7 could be obtained via linear regression as follows. It must be mentioned that a "ts" object must be created first since an "XTS" object does not work well with "lm()" function.
+
+```{r, message=FALSE, warning=FALSE}
+#Creating a "ts" object for T7
+T7.ts= ts(coredata(energy_xts[,which(names(energy_xts) == "T7")])[,1], start=1)
+#Regression with intercept
+fit.linear=lm(T7.ts ~ time(T7.ts))
+#summary of the model
+summary(fit.linear)
+#Plot linear trend
+ggplot(data=data.frame(real=T7.ts, fit=fit.linear$fitted.values, time = time(energy_xts[,15])))+
+  geom_line(aes(x=time, y=real), col="black") + geom_line(aes(x=time, y=fit), col="blue")
+```
+
+
+The estimated regression is $T7 = 0.172 + 0.0003t$. The esimtated coffeicient for the time (t), tells that in each 10 minutes there is an increase amount of temprature, i.e.,  $3.092e-04$, in its unit of measurement. Also the adjusted $R^2$ is 0.69, which means that the estimated linear regression can explain $69%$ of target variables's variation.
+
+
+## Smoohting
+Also, a timeseries can be smoothed by different methods to see the underlying trend. The locally-weighted polynomial regression (lowess) will be invoked for this matter.
+
+```{r}
+#Smoohting using Lowess for T7
+T7.lowess=lowess(energy_xts[,which(names(energy_xts) == "T7")])
+#Plotting the time series and its trend
+ggplot(data=data.frame(real=coredata(energy_xts[,15])[,1], smooth = T7.lowess$y, 
+                       time= time(energy_xts[,15])))+
+  geom_line(aes(x=time, y=real), col="black") + geom_line(aes(x=time, y=smooth), col="red")
+
+```
+The result shows an upward trend for the variable T7 (temprature in ironing room), which is not a surprising fact since the timeseries is captured from spring to summer.
+
+
+
+# ARMA, ARIMA and Model Diagnostic and Selection
+
+A timeseries can be modeled through different formulations, including Moving Average (MA), Auto Regresive (AR), AutoRegressive Moving Average (ARMA) and AutoRegressive Integrated Moving Average (ARIMA). Before getting into the details, it would be helpful to investigate Autocorrelation Function (ACF) and Partially Autocorrelation Function (PACF) plots. These plots guide us which model better fits the data under consideration.
 
 ## ACF and PACF
 This part continues the investigation for timeseries "T7". The following shows corresponding ACF and PACF for this variable.
@@ -206,9 +233,11 @@ This part continues the investigation for timeseries "T7". The following shows c
 #Plotting ACF and PACF for T7
 acf2(energy_xts[,which(names(energy_xts) == "T7")])
 ```
-These plots can help us to select the right model's form. Indeed, MA processes have an ACF plot that is __cut off__ whereas for AR and ARMA processes it is __tailed off__. On the other side PACF can provide a distinction between ARMA and AR, where, for the former the plot is tailed off and for the later it is cut off. From the above plot, It is suspected that the model's form is ARMA since the PACF dosen't show a clear cut off. We can check this issue in another way using AIC infomration criterion. The aim is to build some models and the compares corresponding AIC values.
 
-## Model Selection
+
+These plots can help us to select the right model's form. Indeed, MA processes have an ACF plot that is __cut off__ whereas for AR and ARMA processes it is __tailed off__. On the other side, PACF can provide a distinction between ARMA and AR, where, for the former, the plot is tailed off, and for the later, it is cut off. From the above plot, It is suspected that the model's form is ARMA since the PACF does not show a clear cut off (it is gradually decreasing from the second lag onwards). We can check this issue in another way using AIC information criterion. Indeed, the AIC criterion tells us which model better fits the data and have a smaller number of variables. The aim is to build some models and compares corresponding AIC values.
+
+## Model Building
 In this section, different models will be created and compared in terms of AIC values.
 ```{r}
 #Creating different models
@@ -230,29 +259,21 @@ As shown by AIC values above, ARIMA has better ability to fit data (smaller AIC 
 ```{r}
 #Fitting the best model 
 Best.fit=auto.arima(energy_xts[,which(names(energy_xts) == "T7")])
-Best.fit
+summary(Best.fit)
 AIC(Best.fit)
 ```
 
-The above results indicate the form and parameters of the mnodel which is ARIMA(1,1,1), i.e., first order difference - autoregressive - moving average. Also, one could note that the reported AIC value is smaller than other AIC values obtained earlier.
+The above results indicate the form and parameters of the model which is ARIMA(1,1,1), i.e., first order difference - autoregressive - moving average, which confirmes our previous results obtained manually. Also, one could note that the reported AIC value is smaller than other AIC values obtained earlier.
 
+To see how good the model is, we will examine the residuals of the model.
+```{r}
+#Plotting residuals
+autoplot(residuals(Best.fit))
 
-
-
-# Including Plots
-
-## plotting
-
-```{r pressure, message=FALSE, warning=FALSE}
-w=rnorm(500,0,1)
-v= filter(w, filter = rep(1/3, 3))
-
-
-ggplot(data =data.frame(d=w, time= seq(1,length(w)) )) + geom_line(aes(x=time, y=d))
-ggplot(data =data.frame(d=v, time= seq(1,length(v)) )) + geom_line(aes(x=time, y=d))
+#Further investigations
+checkresiduals(Best.fit)
 ```
 
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Above plots suggest that residuals are normally distributed with mean zero, constant variance, and there are no specific patterns. However, residuals are serially correlated, as this fact can be obtained from the corresponding ACF plot and the results of Ljung-Box test.
 
 

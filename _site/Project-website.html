@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Farbod Taymouri" />
+
+
+<title>Project</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Project</h1>
+<h4 class="author">Farbod Taymouri</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#dataset-description">Dataset description</a><ul>
+<li><a href="#attributes">Attributes</a></li>
+<li><a href="#problem-definition-and-methodology">Problem Definition and Methodology</a></li>
+<li><a href="#basic-data-analysis">Basic Data Analysis</a><ul>
+<li><a href="#corrologram">Corrologram</a></li>
+<li><a href="#boxplot">Boxplot</a></li>
+<li><a href="#histogram">Histogram</a></li>
+<li><a href="#timeseries-with-abline">Timeseries with Abline</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#stationarity">Stationarity</a><ul>
+<li><a href="#transformation">Transformation</a></li>
+<li><a href="#decomposition">Decomposition</a></li>
+<li><a href="#linear-regression">Linear Regression</a></li>
+<li><a href="#smoohting">Smoohting</a></li>
+</ul></li>
+<li><a href="#arma-arima-and-model-diagnostic-and-selection">ARMA, ARIMA and Model Diagnostic and Selection</a><ul>
+<li><a href="#acf-and-pacf">ACF and PACF</a></li>
+<li><a href="#model-building">Model Building</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The following libraries will be used in this project.</p>
+<pre class="r"><code>library(astsa)
+library(ggplot2)
+library(forecast)
+library(dynlm)
+library(xts)
+library(corrplot)
+library(psych)</code></pre>
+</div>
+<div id="dataset-description" class="section level1">
+<h1>Dataset description</h1>
+<p>The dataset used in this project is about <a href="https://archive.ics.uci.edu/ml/datasets/Appliances+energy+prediction">Appliances energy prediction Data Set</a> that is available on UCI website. The data set is at 10 min for about 4.5 months. The house temperature and humidity conditions were monitored with a ZigBee wireless sensor network. Each wireless node transmitted the temperature and humidity conditions around 3.3 min. Then, the wireless data was averaged for 10 minutes periods. The energy data was logged every 10 minutes with m-bus energy meters. Weather from the nearest airport weather station (Chievres Airport, Belgium) was downloaded from a public data set from Reliable Prognosis (rp5.ru), and merged together with the experimental data sets using the date and time column. Two random variables have been included in the data set for testing the regression models and to filter out non predictive attributes (parameters).</p>
+<div id="attributes" class="section level2">
+<h2>Attributes</h2>
+<p>The following attributes are used in this dataset:</p>
+<ul>
+<li>date time year-month-day hour:minute:second</li>
+<li>Appliances, energy use in Wh</li>
+<li>lights, energy use of light fixtures in the house in Wh</li>
+<li>T1, Temperature in kitchen area, in Celsius</li>
+<li>RH_1, Humidity in kitchen area, in %</li>
+<li>T2, Temperature in living room area, in Celsius</li>
+<li>RH_2, Humidity in living room area, in %</li>
+<li>T3, Temperature in laundry room area</li>
+<li>RH_3, Humidity in laundry room area, in %</li>
+<li>T4, Temperature in office room, in Celsius</li>
+<li>RH_4, Humidity in office room, in %</li>
+<li>T5, Temperature in bathroom, in Celsius</li>
+<li>RH_5, Humidity in bathroom, in %</li>
+<li>T6, Temperature outside the building (north side), in Celsius</li>
+<li>RH_6, Humidity outside the building (north side), in %</li>
+<li>T7, Temperature in ironing room , in Celsius</li>
+<li>RH_7, Humidity in ironing room, in %</li>
+<li>T8, Temperature in teenager room 2, in Celsius</li>
+<li>RH_8, Humidity in teenager room 2, in %</li>
+<li>T9, Temperature in parents room, in Celsius</li>
+<li>RH_9, Humidity in parents room, in %</li>
+<li>To, Temperature outside (from Chievres weather station), in Celsius</li>
+<li>Pressure (from Chievres weather station), in mm Hg</li>
+<li>RH_out, Humidity outside (from Chievres weather station), in %</li>
+<li>Wind speed (from Chievres weather station), in m/s</li>
+<li>Visibility (from Chievres weather station), in km</li>
+<li>Tdewpoint (from Chievres weather station), Â°C</li>
+<li>rv1, Random variable 1, nondimensional</li>
+<li>rv2, Random variable 2, nondimensional</li>
+</ul>
+</div>
+<div id="problem-definition-and-methodology" class="section level2">
+<h2>Problem Definition and Methodology</h2>
+<p>The dataset as demonstrated above contains multi timeseres variables that can be used for the prediction of the target variable, i.e., Appliance. However, in this project the focus will be paid on analysing some timeseries features to demonstrate the learned lessons from this course.</p>
+</div>
+<div id="basic-data-analysis" class="section level2">
+<h2>Basic Data Analysis</h2>
+<p>First of all data must be fetched and changed to the timeseres datatype. Since the data is stored in a CSV file, we read it by the standard function and then convert it to TS or XTS. <strong>It must be mentioned that there is no missing values in this dataset</strong>, as shown bellow:</p>
+<pre class="r"><code>#Reading Data
+energy=read.csv(file= &quot;C:/Users/taymouri/Desktop/Indiana/Timeseries/Project/energydata_complete.csv&quot;, header=TRUE, sep=&quot;,&quot;)
+#checking NA
+sum(is.na(energy))</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code>#Converting to XTS
+energy_xts=xts(energy[,-1], order.by =  as.POSIXct(energy$date, format=&quot;%Y-%m-%d %H:%M:%S&quot;, tz=&quot;GMT&quot;))
+#Head of the dataset (for the sake of represenation only for some features are shown)
+head(energy_xts[,3:7])</code></pre>
+<pre><code>##                        T1     RH_1   T2     RH_2    T3
+## 2016-01-11 17:00:00 19.89 47.59667 19.2 44.79000 19.79
+## 2016-01-11 17:10:00 19.89 46.69333 19.2 44.72250 19.79
+## 2016-01-11 17:20:00 19.89 46.30000 19.2 44.62667 19.79
+## 2016-01-11 17:30:00 19.89 46.06667 19.2 44.59000 19.79
+## 2016-01-11 17:40:00 19.89 46.33333 19.2 44.53000 19.79
+## 2016-01-11 17:50:00 19.89 46.02667 19.2 44.50000 19.79</code></pre>
+<pre class="r"><code>#Tail of the dataset
+tail(energy_xts[,3:7])</code></pre>
+<pre><code>##                           T1     RH_1       T2     RH_2       T3
+## 2016-05-27 17:10:00 25.53333 46.86000 25.97800 42.53400 27.32333
+## 2016-05-27 17:20:00 25.56667 46.56000 25.89000 42.02571 27.20000
+## 2016-05-27 17:30:00 25.50000 46.50000 25.75400 42.08000 27.13333
+## 2016-05-27 17:40:00 25.50000 46.59667 25.62857 42.76857 27.05000
+## 2016-05-27 17:50:00 25.50000 46.99000 25.41400 43.03600 26.89000
+## 2016-05-27 18:00:00 25.50000 46.60000 25.26429 42.97143 26.82333</code></pre>
+<p>We can look at some basic information about the timeseries data, like frequency, number of days and etc.</p>
+<pre class="r"><code>#Number of years
+nyears(energy_xts)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>#Number of mounths
+nmonths(energy_xts)</code></pre>
+<pre><code>## [1] 5</code></pre>
+<pre class="r"><code>#Number of days
+ndays(energy_xts)</code></pre>
+<pre><code>## [1] 138</code></pre>
+<pre class="r"><code>#Frequency
+periodicity(energy_xts)</code></pre>
+<pre><code>## 10 minute periodicity from 2016-01-11 17:00:00 to 2016-05-27 18:00:00</code></pre>
+<div id="corrologram" class="section level3">
+<h3>Corrologram</h3>
+<p>It would be interesting to look at the correlation plots between variables. “corrplot ()” is very usefull to give a nice visualization about the correlation between variables.</p>
+<pre class="r"><code>corrplot(cor(energy_xts), type=&quot;upper&quot;)</code></pre>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-5-1.png" width="672" /> The above plot shows the existing positive and negative correaltions among the variables. For example there is a negative correlation between RH_6 (humidity outside the home) and T7 (tempreture in ironing room). This plot shows us the way that values of two variables change against each other, i.e., positive or negative.</p>
+</div>
+<div id="boxplot" class="section level3">
+<h3>Boxplot</h3>
+<p>The following boxplot shows the distribution values of T7 over existing cycles.</p>
+<pre class="r"><code>#Creating a ts object, we set the frequency to 30, such that box plots shows the distributions per day
+T7.ts=ts(coredata(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)]), start=1, frequency = 30)
+boxplot(T7.ts ~ cycle(T7.ts))</code></pre>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>The above plot shows the distributions of temperature for different days are very similar for the given dataset.</p>
+</div>
+<div id="histogram" class="section level3">
+<h3>Histogram</h3>
+<p>One way to identify whether a timeseries is stationary, is to look at its histogram. Usually bell-shaped histograms can be regarded as stationary processes, whereas skewed distrobutions show non-stationary processes.</p>
+<pre class="r"><code>#Excluding the last two columns since they are not timesereis
+multi.hist(energy_xts[,!names(energy_xts) %in% c(&#39;rv1&#39;, &#39;rv2&#39;)])</code></pre>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-7-1.png" width="672" /> As the above plot shows most of timeseries variables except <strong>Windspeed, RH_out</strong> are stationary.</p>
+</div>
+<div id="timeseries-with-abline" class="section level3">
+<h3>Timeseries with Abline</h3>
+<p>Using linear regression, it is easy to see that the trend is increasing; however, it is not a surprising fact since observations are samples from January to May and thus temperature increases in this period. More importantly, the variance of T7 increases as time passes and due to that the time-series in not stationarity.</p>
+<pre class="r"><code>plot(T7.ts) # plot the raw data
+abline(reg=lm(coredata(T7.ts) ~time(T7.ts))) # fit a trend line</code></pre>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="stationarity" class="section level1">
+<h1>Stationarity</h1>
+<p>All the previous plots of T7 showed an upward trend which presumably implies that this time series is not stationary, i.e., corresponding characteristics change over time. Hence, it must be fixed in some ways. It can be done by log transformation or by differencing. Each of the mentioned methods can mitigate to some extent the existing variations such that, the resulting time series becomes closer to stationarity.</p>
+<div id="transformation" class="section level2">
+<h2>Transformation</h2>
+<p>The following codes transfomr T7 into logarithmic and reciprocal values.</p>
+<pre class="r"><code>#Creating logarithmic and reciprocal transformations
+T7.log=log(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)] )
+T7.recip = 1/energy_xts[,which(names(energy_xts) == &quot;T7&quot;)]
+
+#Merging timeseries into a single object
+T7.transform=merge.xts(T7.log, T7.recip, energy_xts[,which(names(energy_xts) == &quot;T7&quot;)])
+#Providing column names
+colnames(T7.transform) = c(&#39;log&#39;, &#39;reciprocal&#39;, &#39;original&#39;)
+#Plotting
+autoplot(T7.transform)</code></pre>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>It is clear from the figures that both transformations can make the time series more stabilize in terms of existing variations. From the figures, the reciprocal and logarithmic transformations look like a horizontal line, but it is owing to inappropriate scaling that occurred when three figures are packed into one frame. Also, it must be stressed that due to the absence of zero and negative values the mentioned transformations did work.</p>
+<p>Adjusting the correct value of differencing for a timeseries is a brute force task and there is no shortcuts. In this part, first order differencing will be adopted to see how it improves the stationary property of a given time series.</p>
+<pre class="r"><code>#Creating a first order differencing timeseries
+T7.diff1=diff(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)])
+#Plotting
+autoplot(T7.diff1)+ylab(&quot;T7.diff1&quot;)</code></pre>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>The above plot shows clearly that the first order differencing (d=1) can capture the available linear trend and makes a stationary time series. This results also confirmed the output of linear regression obtained earlier since the linear regression captures the first order linear trend of a time series.</p>
+</div>
+<div id="decomposition" class="section level2">
+<h2>Decomposition</h2>
+<p>A timeseries can be decomposed into three main elements, i.e., trend, seasonal and residuals. We selected “T7” for this issue (since “decompose()” does not work with XTS objects, a “ts” object is created first).</p>
+<pre class="r"><code>#Creating a ts object (In every month we have (30*24*60)/10 = 4320 samples
+T7.ts=ts(coredata(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)]), start=1, frequency = 4320)
+#decomposing
+plot(decompose(T7.ts))</code></pre>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>As shown in the above figures, the trend is increasing as it is supposed to be, since the observations are sampled from January until May. The seasonal plot clearly depicts cycles in each month. More importantly, one can see that the ransom noise is fully captured by this decomposition ( it is random since no specific patterns are observed).</p>
+</div>
+<div id="linear-regression" class="section level2">
+<h2>Linear Regression</h2>
+<p>The linear trend for variable T7 could be obtained via linear regression as follows. It must be mentioned that a “ts” object must be created first since an “XTS” object does not work well with “lm()” function.</p>
+<pre class="r"><code>#Creating a &quot;ts&quot; object for T7
+T7.ts= ts(coredata(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)])[,1], start=1)
+#Regression with intercept
+fit.linear=lm(T7.ts ~ time(T7.ts))
+#summary of the model
+summary(fit.linear)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = T7.ts ~ time(T7.ts))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.1692 -0.7134  0.0900  0.6497  4.3088 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 1.722e+01  1.653e-02  1041.4   &lt;2e-16 ***
+## time(T7.ts) 3.092e-04  1.451e-06   213.1   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.161 on 19733 degrees of freedom
+## Multiple R-squared:  0.6972, Adjusted R-squared:  0.6972 
+## F-statistic: 4.543e+04 on 1 and 19733 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>#Plot linear trend
+ggplot(data=data.frame(real=T7.ts, fit=fit.linear$fitted.values, time = time(energy_xts[,15])))+
+  geom_line(aes(x=time, y=real), col=&quot;black&quot;) + geom_line(aes(x=time, y=fit), col=&quot;blue&quot;)</code></pre>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>The estimated regression is <span class="math inline">\(T7 = 0.172 + 0.0003t\)</span>. The esimtated coffeicient for the time (t), tells that in each 10 minutes there is an increase amount of temprature, i.e., <span class="math inline">\(3.092e-04\)</span>, in its unit of measurement. Also the adjusted <span class="math inline">\(R^2\)</span> is 0.69, which means that the estimated linear regression can explain <span class="math inline">\(69%\)</span> of target variables’s variation.</p>
+</div>
+<div id="smoohting" class="section level2">
+<h2>Smoohting</h2>
+<p>Also, a timeseries can be smoothed by different methods to see the underlying trend. The locally-weighted polynomial regression (lowess) will be invoked for this matter.</p>
+<pre class="r"><code>#Smoohting using Lowess for T7
+T7.lowess=lowess(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)])
+#Plotting the time series and its trend
+ggplot(data=data.frame(real=coredata(energy_xts[,15])[,1], smooth = T7.lowess$y, 
+                       time= time(energy_xts[,15])))+
+  geom_line(aes(x=time, y=real), col=&quot;black&quot;) + geom_line(aes(x=time, y=smooth), col=&quot;red&quot;)</code></pre>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-13-1.png" width="672" /> The result shows an upward trend for the variable T7 (temprature in ironing room), which is not a surprising fact since the timeseries is captured from spring to summer.</p>
+</div>
+</div>
+<div id="arma-arima-and-model-diagnostic-and-selection" class="section level1">
+<h1>ARMA, ARIMA and Model Diagnostic and Selection</h1>
+<p>A timeseries can be modeled through different formulations, including Moving Average (MA), Auto Regresive (AR), AutoRegressive Moving Average (ARMA) and AutoRegressive Integrated Moving Average (ARIMA). Before getting into the details, it would be helpful to investigate Autocorrelation Function (ACF) and Partially Autocorrelation Function (PACF) plots. These plots guide us which model better fits the data under consideration.</p>
+<div id="acf-and-pacf" class="section level2">
+<h2>ACF and PACF</h2>
+<p>This part continues the investigation for timeseries “T7”. The following shows corresponding ACF and PACF for this variable.</p>
+<pre class="r"><code>#Plotting ACF and PACF for T7
+acf2(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)])</code></pre>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>These plots can help us to select the right model’s form. Indeed, MA processes have an ACF plot that is <strong>cut off</strong> whereas for AR and ARMA processes it is <strong>tailed off</strong>. On the other side, PACF can provide a distinction between ARMA and AR, where, for the former, the plot is tailed off, and for the later, it is cut off. From the above plot, It is suspected that the model’s form is ARMA since the PACF does not show a clear cut off (it is gradually decreasing from the second lag onwards). We can check this issue in another way using AIC information criterion. Indeed, the AIC criterion tells us which model better fits the data and have a smaller number of variables. The aim is to build some models and compares corresponding AIC values.</p>
+</div>
+<div id="model-building" class="section level2">
+<h2>Model Building</h2>
+<p>In this section, different models will be created and compared in terms of AIC values.</p>
+<pre class="r"><code>#Creating different models
+#First order AR
+AR1=arima(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)], order=c(1,0,0) )
+#First order MA
+MA1=arima(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)], order=c(0,0,1) )
+#ARMA(1,0,1)
+ARMA=arima(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)], order=c(1,0,1) )
+#ARIMA(1,1,0)
+ARIMA=arima(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)], order=c(1,1,0) )
+
+#Comparing AIC values
+print(cat(&quot;AIC for different models:\n&quot;, &quot;AR1:&quot;,round(AIC(AR1),2), &quot;\n MA1:&quot;,round(AIC(MA1),2), 
+            &quot;\n ARMA:&quot;, round(AIC(ARMA),2), &quot;\n ARIMA:&quot;, round(AIC(ARIMA),2) ))</code></pre>
+<pre><code>## AIC for different models:
+##  AR1: -67703.44 
+##  MA1: 58587.65 
+##  ARMA: -69806.58 
+##  ARIMA: -70917.15NULL</code></pre>
+<p>As shown by AIC values above, ARIMA has better ability to fit data (smaller AIC value), but instead of finding the parameters of this model in an exhaustive way, we can resort to “Auto.arima()” function that returns the most fitting model.</p>
+<pre class="r"><code>#Fitting the best model 
+Best.fit=auto.arima(energy_xts[,which(names(energy_xts) == &quot;T7&quot;)])
+summary(Best.fit)</code></pre>
+<pre><code>## Series: energy_xts[, which(names(energy_xts) == &quot;T7&quot;)] 
+## ARIMA(1,1,1) 
+## 
+## Coefficients:
+##          ar1      ma1
+##       0.9066  -0.6740
+## s.e.  0.0049   0.0086
+## 
+## sigma^2 estimated as 0.001452:  log likelihood=36475.42
+## AIC=-72944.85   AICc=-72944.85   BIC=-72921.18
+## 
+## Training set error measures:
+##                        ME       RMSE        MAE          MPE      MAPE
+## Training set 0.0001068284 0.03810826 0.02321765 0.0007849972 0.1151972
+##                     MASE         ACF1
+## Training set 0.001145583 -0.004181521</code></pre>
+<pre class="r"><code>AIC(Best.fit)</code></pre>
+<pre><code>## [1] -72944.85</code></pre>
+<p>The above results indicate the form and parameters of the model which is ARIMA(1,1,1), i.e., first order difference - autoregressive - moving average, which confirmes our previous results obtained manually. Also, one could note that the reported AIC value is smaller than other AIC values obtained earlier.</p>
+<p>To see how good the model is, we will examine the residuals of the model.</p>
+<pre class="r"><code>#Plotting residuals
+autoplot(residuals(Best.fit))</code></pre>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<pre class="r"><code>#Further investigations
+checkresiduals(Best.fit)</code></pre>
+<p><img src="Project-website_files/figure-html/unnamed-chunk-17-2.png" width="672" /></p>
+<pre><code>## 
+##  Ljung-Box test
+## 
+## data:  Residuals from ARIMA(1,1,1)
+## Q* = 22.925, df = 8, p-value = 0.003462
+## 
+## Model df: 2.   Total lags used: 10</code></pre>
+<p>Above plots suggest that residuals are normally distributed with mean zero, constant variance, and there are no specific patterns. However, residuals are serially correlated, as this fact can be obtained from the corresponding ACF plot and the results of Ljung-Box test.</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
