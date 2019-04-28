@@ -2,6 +2,7 @@
 title: "Project"
 author: "Farbod Taymouri"
 output: rmarkdown::github_document
+#output: html_document
 ---
 
 ```{r, echo = FALSE}
@@ -65,7 +66,8 @@ First of all data must be fetched and changed to the timeseres datatype. Since t
 
 ```{r, message=FALSE, warning=FALSE}
 #Reading Data
-energy=read.csv(file= "C:/Users/taymouri/Desktop/Indiana/Timeseries/Project/energydata_complete.csv", header=TRUE, sep=",")
+energy=read.table(file = "https://archive.ics.uci.edu/ml/machine-learning-databases/00374/energydata_complete.csv", header = TRUE, sep=",")
+
 #checking NA
 sum(is.na(energy))
 #Converting to XTS
@@ -91,11 +93,18 @@ ndays(energy_xts)
 #Frequency
 periodicity(energy_xts)
 ```
+
+Also, the summary of variables, like, mean, max, sd and etc, are provided as follows:
+```{r}
+summary(energy_xts)
+```
+
 ### Corrologram
 It would be interesting to look at the correlation plots between variables. "corrplot ()" is very usefull to give a nice visualization about the correlation between variables.
 ```{r}
 corrplot(cor(energy_xts), type="upper")
 ```
+
 The above plot shows the existing positive and negative correaltions among the variables. For example there is a negative correlation between RH_6 (humidity outside the home) and T7 (tempreture in ironing room). This plot shows us the way that values of two variables change against each other, i.e., positive or negative.
 
 
@@ -117,10 +126,12 @@ One way to identify whether a timeseries is stationary, is to look at its histog
 #Excluding the last two columns since they are not timesereis
 multi.hist(energy_xts[,!names(energy_xts) %in% c('rv1', 'rv2')])
 ```
+
+
 As the above plot shows most of timeseries variables except __Windspeed, RH_out__ are stationary.
 
 ### Timeseries with Abline
-Using linear regression, it is easy to see that the trend is increasing; however, it is not a surprising fact since observations are samples from January to May and thus temperature increases in this period. More importantly, the variance of T7 increases as time passes and due to that the time-series in not stationarity.
+Using linear regression, it is easy to see that the trend is increasing; however, it is not a surprising fact since observations are samples from January to May and thus temperature increases in this period. More importantly, the variance of T7 increases as time passes and due to that the time-series in not stationarity.  Above that, one can see that the variance and mean of T7 increase as time goes by.
 ```{r}
 plot(T7.ts) # plot the raw data
 abline(reg=lm(coredata(T7.ts) ~time(T7.ts))) # fit a trend line
@@ -169,7 +180,7 @@ The above plot shows clearly that the first order differencing (d=1) can capture
 
 
 ## Decomposition
-A timeseries can be decomposed into three main elements, i.e., trend, seasonal and residuals. We selected "T7" for this issue (since "decompose()" does not work with XTS objects, a "ts" object is created first).
+A timeseries can be decomposed into three main elements, i.e., trend, seasonal and residuals. We selected "T7" for this issue (since "decompose()" does not work with XTS objects, a "ts" object is created first). The additive decomposition will be used as follows:
 ```{r}
 #Creating a ts object (In every month we have (30*24*60)/10 = 4320 samples
 T7.ts=ts(coredata(energy_xts[,which(names(energy_xts) == "T7")]), start=1, frequency = 4320)
@@ -198,7 +209,7 @@ ggplot(data=data.frame(real=T7.ts, fit=fit.linear$fitted.values, time = time(ene
 ```
 
 
-The estimated regression is $T7 = 0.172 + 0.0003t$. The esimtated coffeicient for the time (t), tells that in each 10 minutes there is an increase amount of temprature, i.e.,  $3.092e-04$, in its unit of measurement. Also the adjusted $R^2$ is 0.69, which means that the estimated linear regression can explain $69%$ of target variables's variation.
+The estimated regression is $T7 = 0.172 + 0.0003t$. All the coefficients are statistically significant. The esimtated coffeicient for the time (t), tells that in each 10 minutes there is an increase amount of temprature, i.e.,  $3.092e-04$, in its unit of measurement. Also the adjusted $R^2$ is 0.69, which means that the estimated linear regression can explain $69%$ of target variables's variation.
 
 
 ## Smoohting

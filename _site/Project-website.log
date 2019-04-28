@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2016.8.14)  27 APR 2019 00:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2016.8.14)  28 APR 2019 20:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -805,7 +805,8 @@ Package: titling 2009/09/04 v2.1d maketitle typesetting
 \thanksmarkwidth=\skip49
 \thanksmargin=\skip50
 \droptitle=\skip51
-) (./Project-website.aux)
+)
+No file Project-website.aux.
 \openout1 = `Project-website.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 127.
@@ -895,7 +896,6 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 127.
 LaTeX Info: Redefining \pageref on input line 127.
 LaTeX Info: Redefining \nameref on input line 127.
-(./Project-website.out) (./Project-website.out)
 \@outlinefile=\write4
 \openout4 = `Project-website.out'.
 
@@ -926,161 +926,37 @@ G,.JBIG2,.JB2,.eps]
 (c:/texlive/2016/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
-)) (./Project-website.toc)
-\tf@toc=\write5
-\openout5 = `Project-website.toc'.
-
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 139.
+))
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 135.
 
 (c:/texlive/2016/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 140.
-LaTeX Font Info:    Try loading font information for TS1+lmr on input line 174.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 136.
+LaTeX Font Info:    Try loading font information for TS1+lmr on input line 170.
 
 (c:/texlive/2016/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [1
 
 {c:/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-<Project-website_files/figure-latex/unnamed-chunk-5-1.pdf, id=60, 469.755pt x 3
-25.215pt>
-File: Project-website_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (ty
-pe pdf)
-<use Project-website_files/figure-latex/unnamed-chunk-5-1.pdf>
-Package pdftex.def Info: Project-website_files/figure-latex/unnamed-chunk-5-1.p
-df used on input line 357.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 357--363
-[][]
+Underfull \vbox (badness 4805) detected at line 362
  []
 
-[3]
-<Project-website_files/figure-latex/unnamed-chunk-6-1.pdf, id=66, 469.755pt x 3
-25.215pt>
-File: Project-website_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (ty
-pe pdf)
-<use Project-website_files/figure-latex/unnamed-chunk-6-1.pdf>
-Package pdftex.def Info: Project-website_files/figure-latex/unnamed-chunk-6-1.p
-df used on input line 377.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[4 <./Project-website_files/figure-latex/unnamed-chunk-5-1.pdf>]
-LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 392
-.
-(c:/texlive/2016/texmf-dist/tex/latex/lm/ts1lmtt.fd
-File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-<Project-website_files/figure-latex/unnamed-chunk-7-1.pdf, id=77, 469.755pt x 3
-25.215pt>
-File: Project-website_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (ty
-pe pdf)
-<use Project-website_files/figure-latex/unnamed-chunk-7-1.pdf>
-Package pdftex.def Info: Project-website_files/figure-latex/unnamed-chunk-7-1.p
-df used on input line 396.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 396--399
-[][]
- []
-
-[5 <./Project-website_files/figure-latex/unnamed-chunk-6-1.pdf>]
-<Project-website_files/figure-latex/unnamed-chunk-8-1.pdf, id=89, 469.755pt x 3
-25.215pt>
-File: Project-website_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (ty
-pe pdf)
-<use Project-website_files/figure-latex/unnamed-chunk-8-1.pdf>
-Package pdftex.def Info: Project-website_files/figure-latex/unnamed-chunk-8-1.p
-df used on input line 415.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[6 <./Project-website_files/figure-latex/unnamed-chunk-7-1.pdf>]
-<Project-website_files/figure-latex/unnamed-chunk-9-1.pdf, id=101, 469.755pt x 
-325.215pt>
-File: Project-website_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (ty
-pe pdf)
-<use Project-website_files/figure-latex/unnamed-chunk-9-1.pdf>
-Package pdftex.def Info: Project-website_files/figure-latex/unnamed-chunk-9-1.p
-df used on input line 445.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[7 <./Project-website_files/figure-latex/unnamed-chunk-8-1.pdf>]
-<Project-website_files/figure-latex/unnamed-chunk-10-1.pdf, id=112, 469.755pt x
- 325.215pt>
-File: Project-website_files/figure-latex/unnamed-chunk-10-1.pdf Graphic file (t
-ype pdf)
-<use Project-website_files/figure-latex/unnamed-chunk-10-1.pdf>
-Package pdftex.def Info: Project-website_files/figure-latex/unnamed-chunk-10-1.
-pdf used on input line 469.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[8 <./Project-website_files/figure-latex/unnamed-chunk-9-1.pdf>]
-<Project-website_files/figure-latex/unnamed-chunk-11-1.pdf, id=122, 469.755pt x
- 325.215pt>
-File: Project-website_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (t
-ype pdf)
-<use Project-website_files/figure-latex/unnamed-chunk-11-1.pdf>
-Package pdftex.def Info: Project-website_files/figure-latex/unnamed-chunk-11-1.
-pdf used on input line 493.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[9 <./Project-website_files/figure-latex/unnamed-chunk-10-1.pdf>] [10 <./Projec
-t-website_files/figure-latex/unnamed-chunk-11-1.pdf>]
-<Project-website_files/figure-latex/unnamed-chunk-12-1.pdf, id=142, 469.755pt x
- 325.215pt>
-File: Project-website_files/figure-latex/unnamed-chunk-12-1.pdf Graphic file (t
-ype pdf)
-<use Project-website_files/figure-latex/unnamed-chunk-12-1.pdf>
-Package pdftex.def Info: Project-website_files/figure-latex/unnamed-chunk-12-1.
-pdf used on input line 547.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 549.
-
-(c:/texlive/2016/texmf-dist/tex/latex/lm/ot1lmr.fd
-File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 549.
-
-(c:/texlive/2016/texmf-dist/tex/latex/lm/omllmm.fd
-File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 549
-.
-(c:/texlive/2016/texmf-dist/tex/latex/lm/omslmsy.fd
-File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 549
-.
-(c:/texlive/2016/texmf-dist/tex/latex/lm/omxlmex.fd
-File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 549.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 549.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 549.
-LaTeX Font Info:    Try loading font information for U+msa on input line 549.
-(c:/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-) (c:/texlive/2016/texmf-dist/tex/latex/microtype/mt-msa.cfg
-File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
-)
-LaTeX Font Info:    Try loading font information for U+msb on input line 549.
-(c:/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) (c:/texlive/2016/texmf-dist/tex/latex/microtype/mt-msb.cfg
-File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-)
-! Missing $ inserted.
-<inserted text> 
-                $
-l.555 
-       
+[3] <README_figs/README-unnamed-chunk-6-1.png, id=32, 505.89pt x 361.35pt>
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   \relax 
+l.376 ...68]{README_figs/README-unnamed-chunk-6-1}
+                                                   
 Here is how much of TeX's memory you used:
- 12945 strings out of 493013
- 188782 string characters out of 6136993
- 294138 words of memory out of 5000000
- 16236 multiletter control sequences out of 15000+600000
- 45474 words of font info for 66 fonts, out of 8000000 for 9000
+ 12679 strings out of 493013
+ 182433 string characters out of 6136993
+ 294396 words of memory out of 5000000
+ 16063 multiletter control sequences out of 15000+600000
+ 32167 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 32i,6n,38p,456b,453s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 32i,5n,38p,367b,388s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 !  ==> Fatal error occurred, no output PDF file produced!

@@ -53,7 +53,7 @@ The following attributes are used in this dataset:
 -   RH\_out, Humidity outside (from Chievres weather station), in %
 -   Wind speed (from Chievres weather station), in m/s
 -   Visibility (from Chievres weather station), in km
--   Tdewpoint (from Chievres weather station), Â°C
+-   Tdewpoint (from Chievres weather station), °C
 -   rv1, Random variable 1, nondimensional
 -   rv2, Random variable 2, nondimensional
 
@@ -69,7 +69,8 @@ First of all data must be fetched and changed to the timeseres datatype. Since t
 
 ``` r
 #Reading Data
-energy=read.csv(file= "C:/Users/taymouri/Desktop/Indiana/Timeseries/Project/energydata_complete.csv", header=TRUE, sep=",")
+energy=read.table(file = "https://archive.ics.uci.edu/ml/machine-learning-databases/00374/energydata_complete.csv", header = TRUE, sep=",")
+
 #checking NA
 sum(is.na(energy))
 ## [1] 0
@@ -115,6 +116,68 @@ periodicity(energy_xts)
 ## 10 minute periodicity from 2016-01-11 17:00:00 to 2016-05-27 18:00:00
 ```
 
+Also, the summary of variables, like, mean, max, sd and etc, are provided as follows:
+
+``` r
+summary(energy_xts)
+##      Index                       Appliances          lights      
+##  Min.   :2016-01-11 17:00:00   Min.   :  10.00   Min.   : 0.000  
+##  1st Qu.:2016-02-14 23:15:00   1st Qu.:  50.00   1st Qu.: 0.000  
+##  Median :2016-03-20 05:30:00   Median :  60.00   Median : 0.000  
+##  Mean   :2016-03-20 05:30:00   Mean   :  97.69   Mean   : 3.802  
+##  3rd Qu.:2016-04-23 11:45:00   3rd Qu.: 100.00   3rd Qu.: 0.000  
+##  Max.   :2016-05-27 18:00:00   Max.   :1080.00   Max.   :70.000  
+##        T1             RH_1             T2             RH_2      
+##  Min.   :16.79   Min.   :27.02   Min.   :16.10   Min.   :20.46  
+##  1st Qu.:20.76   1st Qu.:37.33   1st Qu.:18.79   1st Qu.:37.90  
+##  Median :21.60   Median :39.66   Median :20.00   Median :40.50  
+##  Mean   :21.69   Mean   :40.26   Mean   :20.34   Mean   :40.42  
+##  3rd Qu.:22.60   3rd Qu.:43.07   3rd Qu.:21.50   3rd Qu.:43.26  
+##  Max.   :26.26   Max.   :63.36   Max.   :29.86   Max.   :56.03  
+##        T3             RH_3             T4             RH_4      
+##  Min.   :17.20   Min.   :28.77   Min.   :15.10   Min.   :27.66  
+##  1st Qu.:20.79   1st Qu.:36.90   1st Qu.:19.53   1st Qu.:35.53  
+##  Median :22.10   Median :38.53   Median :20.67   Median :38.40  
+##  Mean   :22.27   Mean   :39.24   Mean   :20.86   Mean   :39.03  
+##  3rd Qu.:23.29   3rd Qu.:41.76   3rd Qu.:22.10   3rd Qu.:42.16  
+##  Max.   :29.24   Max.   :50.16   Max.   :26.20   Max.   :51.09  
+##        T5             RH_5             T6              RH_6      
+##  Min.   :15.33   Min.   :29.82   Min.   :-6.065   Min.   : 1.00  
+##  1st Qu.:18.28   1st Qu.:45.40   1st Qu.: 3.627   1st Qu.:30.02  
+##  Median :19.39   Median :49.09   Median : 7.300   Median :55.29  
+##  Mean   :19.59   Mean   :50.95   Mean   : 7.911   Mean   :54.61  
+##  3rd Qu.:20.62   3rd Qu.:53.66   3rd Qu.:11.256   3rd Qu.:83.23  
+##  Max.   :25.80   Max.   :96.32   Max.   :28.290   Max.   :99.90  
+##        T7             RH_7             T8             RH_8      
+##  Min.   :15.39   Min.   :23.20   Min.   :16.31   Min.   :29.60  
+##  1st Qu.:18.70   1st Qu.:31.50   1st Qu.:20.79   1st Qu.:39.07  
+##  Median :20.03   Median :34.86   Median :22.10   Median :42.38  
+##  Mean   :20.27   Mean   :35.39   Mean   :22.03   Mean   :42.94  
+##  3rd Qu.:21.60   3rd Qu.:39.00   3rd Qu.:23.39   3rd Qu.:46.54  
+##  Max.   :26.00   Max.   :51.40   Max.   :27.23   Max.   :58.78  
+##        T9             RH_9           T_out         Press_mm_hg   
+##  Min.   :14.89   Min.   :29.17   Min.   :-5.000   Min.   :729.3  
+##  1st Qu.:18.00   1st Qu.:38.50   1st Qu.: 3.667   1st Qu.:750.9  
+##  Median :19.39   Median :40.90   Median : 6.917   Median :756.1  
+##  Mean   :19.49   Mean   :41.55   Mean   : 7.412   Mean   :755.5  
+##  3rd Qu.:20.60   3rd Qu.:44.34   3rd Qu.:10.408   3rd Qu.:760.9  
+##  Max.   :24.50   Max.   :53.33   Max.   :26.100   Max.   :772.3  
+##      RH_out         Windspeed        Visibility      Tdewpoint     
+##  Min.   : 24.00   Min.   : 0.000   Min.   : 1.00   Min.   :-6.600  
+##  1st Qu.: 70.33   1st Qu.: 2.000   1st Qu.:29.00   1st Qu.: 0.900  
+##  Median : 83.67   Median : 3.667   Median :40.00   Median : 3.433  
+##  Mean   : 79.75   Mean   : 4.040   Mean   :38.33   Mean   : 3.761  
+##  3rd Qu.: 91.67   3rd Qu.: 5.500   3rd Qu.:40.00   3rd Qu.: 6.567  
+##  Max.   :100.00   Max.   :14.000   Max.   :66.00   Max.   :15.500  
+##       rv1                rv2          
+##  Min.   : 0.00532   Min.   : 0.00532  
+##  1st Qu.:12.49789   1st Qu.:12.49789  
+##  Median :24.89765   Median :24.89765  
+##  Mean   :24.98803   Mean   :24.98803  
+##  3rd Qu.:37.58377   3rd Qu.:37.58377  
+##  Max.   :49.99653   Max.   :49.99653
+```
+
 ### Corrologram
 
 It would be interesting to look at the correlation plots between variables. "corrplot ()" is very usefull to give a nice visualization about the correlation between variables.
@@ -123,7 +186,9 @@ It would be interesting to look at the correlation plots between variables. "cor
 corrplot(cor(energy_xts), type="upper")
 ```
 
-<img src="README_figs/README-unnamed-chunk-5-1.png" width="672" /> The above plot shows the existing positive and negative correaltions among the variables. For example there is a negative correlation between RH\_6 (humidity outside the home) and T7 (tempreture in ironing room). This plot shows us the way that values of two variables change against each other, i.e., positive or negative.
+<img src="README_figs/README-unnamed-chunk-6-1.png" width="672" />
+
+The above plot shows the existing positive and negative correaltions among the variables. For example there is a negative correlation between RH\_6 (humidity outside the home) and T7 (tempreture in ironing room). This plot shows us the way that values of two variables change against each other, i.e., positive or negative.
 
 ### Boxplot
 
@@ -135,7 +200,7 @@ T7.ts=ts(coredata(energy_xts[,which(names(energy_xts) == "T7")]), start=1, frequ
 boxplot(T7.ts ~ cycle(T7.ts))
 ```
 
-<img src="README_figs/README-unnamed-chunk-6-1.png" width="672" />
+<img src="README_figs/README-unnamed-chunk-7-1.png" width="672" />
 
 The above plot shows the distributions of temperature for different days are very similar for the given dataset.
 
@@ -148,18 +213,20 @@ One way to identify whether a timeseries is stationary, is to look at its histog
 multi.hist(energy_xts[,!names(energy_xts) %in% c('rv1', 'rv2')])
 ```
 
-<img src="README_figs/README-unnamed-chunk-7-1.png" width="672" /> As the above plot shows most of timeseries variables except **Windspeed, RH\_out** are stationary.
+<img src="README_figs/README-unnamed-chunk-8-1.png" width="672" />
+
+As the above plot shows most of timeseries variables except **Windspeed, RH\_out** are stationary.
 
 ### Timeseries with Abline
 
-Using linear regression, it is easy to see that the trend is increasing; however, it is not a surprising fact since observations are samples from January to May and thus temperature increases in this period. More importantly, the variance of T7 increases as time passes and due to that the time-series in not stationarity.
+Using linear regression, it is easy to see that the trend is increasing; however, it is not a surprising fact since observations are samples from January to May and thus temperature increases in this period. More importantly, the variance of T7 increases as time passes and due to that the time-series in not stationarity. Above that, one can see that the variance and mean of T7 increase as time goes by.
 
 ``` r
 plot(T7.ts) # plot the raw data
 abline(reg=lm(coredata(T7.ts) ~time(T7.ts))) # fit a trend line
 ```
 
-<img src="README_figs/README-unnamed-chunk-8-1.png" width="672" />
+<img src="README_figs/README-unnamed-chunk-9-1.png" width="672" />
 
 Stationarity
 ============
@@ -184,7 +251,7 @@ colnames(T7.transform) = c('log', 'reciprocal', 'original')
 autoplot(T7.transform)
 ```
 
-<img src="README_figs/README-unnamed-chunk-9-1.png" width="672" />
+<img src="README_figs/README-unnamed-chunk-10-1.png" width="672" />
 
 It is clear from the figures that both transformations can make the time series more stabilize in terms of existing variations. From the figures, the reciprocal and logarithmic transformations look like a horizontal line, but it is owing to inappropriate scaling that occurred when three figures are packed into one frame. Also, it must be stressed that due to the absence of zero and negative values the mentioned transformations did work.
 
@@ -197,14 +264,14 @@ T7.diff1=diff(energy_xts[,which(names(energy_xts) == "T7")])
 autoplot(T7.diff1)+ylab("T7.diff1")
 ```
 
-<img src="README_figs/README-unnamed-chunk-10-1.png" width="672" />
+<img src="README_figs/README-unnamed-chunk-11-1.png" width="672" />
 
 The above plot shows clearly that the first order differencing (d=1) can capture the available linear trend and makes a stationary time series. This results also confirmed the output of linear regression obtained earlier since the linear regression captures the first order linear trend of a time series.
 
 Decomposition
 -------------
 
-A timeseries can be decomposed into three main elements, i.e., trend, seasonal and residuals. We selected "T7" for this issue (since "decompose()" does not work with XTS objects, a "ts" object is created first).
+A timeseries can be decomposed into three main elements, i.e., trend, seasonal and residuals. We selected "T7" for this issue (since "decompose()" does not work with XTS objects, a "ts" object is created first). The additive decomposition will be used as follows:
 
 ``` r
 #Creating a ts object (In every month we have (30*24*60)/10 = 4320 samples
@@ -213,7 +280,7 @@ T7.ts=ts(coredata(energy_xts[,which(names(energy_xts) == "T7")]), start=1, frequ
 plot(decompose(T7.ts))
 ```
 
-<img src="README_figs/README-unnamed-chunk-11-1.png" width="672" />
+<img src="README_figs/README-unnamed-chunk-12-1.png" width="672" />
 
 As shown in the above figures, the trend is increasing as it is supposed to be, since the observations are sampled from January until May. The seasonal plot clearly depicts cycles in each month. More importantly, one can see that the ransom noise is fully captured by this decomposition ( it is random since no specific patterns are observed).
 
@@ -252,9 +319,9 @@ ggplot(data=data.frame(real=T7.ts, fit=fit.linear$fitted.values, time = time(ene
   geom_line(aes(x=time, y=real), col="black") + geom_line(aes(x=time, y=fit), col="blue")
 ```
 
-<img src="README_figs/README-unnamed-chunk-12-1.png" width="672" />
+<img src="README_figs/README-unnamed-chunk-13-1.png" width="672" />
 
-The estimated regression is *T*7 = 0.172 + 0.0003*t*. The esimtated coffeicient for the time (t), tells that in each 10 minutes there is an increase amount of temprature, i.e., 3.092*e* − 04, in its unit of measurement. Also the adjusted *R*<sup>2</sup> is 0.69, which means that the estimated linear regression can explain 69 of target variables's variation.
+The estimated regression is *T*7 = 0.172 + 0.0003*t*. All the coefficients are statistically significant. The esimtated coffeicient for the time (t), tells that in each 10 minutes there is an increase amount of temprature, i.e., 3.092*e* − 04, in its unit of measurement. Also the adjusted *R*<sup>2</sup> is 0.69, which means that the estimated linear regression can explain 69 of target variables's variation.
 
 Smoohting
 ---------
@@ -270,7 +337,7 @@ ggplot(data=data.frame(real=coredata(energy_xts[,15])[,1], smooth = T7.lowess$y,
   geom_line(aes(x=time, y=real), col="black") + geom_line(aes(x=time, y=smooth), col="red")
 ```
 
-<img src="README_figs/README-unnamed-chunk-13-1.png" width="672" /> The result shows an upward trend for the variable T7 (temprature in ironing room), which is not a surprising fact since the timeseries is captured from spring to summer.
+<img src="README_figs/README-unnamed-chunk-14-1.png" width="672" /> The result shows an upward trend for the variable T7 (temprature in ironing room), which is not a surprising fact since the timeseries is captured from spring to summer.
 
 ARMA, ARIMA and Model Diagnostic and Selection
 ==============================================
@@ -287,7 +354,7 @@ This part continues the investigation for timeseries "T7". The following shows c
 acf2(energy_xts[,which(names(energy_xts) == "T7")])
 ```
 
-<img src="README_figs/README-unnamed-chunk-14-1.png" width="672" />
+<img src="README_figs/README-unnamed-chunk-15-1.png" width="672" />
 
 These plots can help us to select the right model's form. Indeed, MA processes have an ACF plot that is **cut off** whereas for AR and ARMA processes it is **tailed off**. On the other side, PACF can provide a distinction between ARMA and AR, where, for the former, the plot is tailed off, and for the later, it is cut off. From the above plot, It is suspected that the model's form is ARMA since the PACF does not show a clear cut off (it is gradually decreasing from the second lag onwards). We can check this issue in another way using AIC information criterion. Indeed, the AIC criterion tells us which model better fits the data and have a smaller number of variables. The aim is to build some models and compares corresponding AIC values.
 
@@ -352,7 +419,7 @@ To see how good the model is, we will examine the residuals of the model.
 autoplot(residuals(Best.fit))
 ```
 
-<img src="README_figs/README-unnamed-chunk-17-1.png" width="672" />
+<img src="README_figs/README-unnamed-chunk-18-1.png" width="672" />
 
 ``` r
 
@@ -360,7 +427,7 @@ autoplot(residuals(Best.fit))
 checkresiduals(Best.fit)
 ```
 
-<img src="README_figs/README-unnamed-chunk-17-2.png" width="672" />
+<img src="README_figs/README-unnamed-chunk-18-2.png" width="672" />
 
     ## 
     ##  Ljung-Box test
